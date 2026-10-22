@@ -11,15 +11,26 @@ public class LabInvestigation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "patient_id")
     private Long patientId;
+
+    @Column(name = "prescription_id")
     private Long prescriptionId;
+
+    @Column(name = "test_name")
     private String testName;
-    private String status; // e.g., "PENDING", "COMPLETED"
+
+    private String status; 
+
+    @Column(name = "requested_date")
     private LocalDateTime requestedDate;
+
+    @Column(name = "result_details")
     private String resultDetails;
 
     public LabInvestigation() {}
 
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

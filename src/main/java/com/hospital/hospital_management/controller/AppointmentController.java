@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/appointments")
-@CrossOrigin(origins = "http://localhost:3000") // Adjust depending on frontend port
+@CrossOrigin(origins = "http://localhost:5173") 
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
@@ -19,15 +19,11 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
-    // --- Create / Book Appointment ---
-
     @PostMapping
     public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
         AppointmentDTO created = appointmentService.createAppointment(appointmentDTO);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
-
-    // --- Read Operations ---
 
     @GetMapping
     public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
@@ -54,8 +50,6 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.getAppointmentsByPatientId(patientId));
     }
 
-    // --- Update Operations ---
-
     @PutMapping("/{id}")
     public ResponseEntity<AppointmentDTO> updateAppointment(
             @PathVariable Long id,
@@ -76,8 +70,6 @@ public class AppointmentController {
             @RequestParam String status) {
         return ResponseEntity.ok(appointmentService.updateStatus(id, status));
     }
-
-    // --- Delete / Cancel Operation ---
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAppointment(@PathVariable Long id) {

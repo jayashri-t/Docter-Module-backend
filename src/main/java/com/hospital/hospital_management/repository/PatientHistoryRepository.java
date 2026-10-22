@@ -11,9 +11,7 @@ import java.util.Optional;
 @Repository
 public interface PatientHistoryRepository extends JpaRepository<PatientHistory, Long> {
 
-    // १. पेशंट आयडीवरून हिस्टरी शोधण्यासाठी (हा मेथड मिसिंग होता)
     Optional<PatientHistory> findByPatientId(Long patientId);
 
-    // २. पेशंटच्या सर्व जुन्या हिस्टरीच्या लिस्टसाठी (तारीखेनुसार उरत्या क्रमाने)
     List<PatientHistory> findByPatientIdOrderByDiagnosisDateDesc(Long patientId);
 }

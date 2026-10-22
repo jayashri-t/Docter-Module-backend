@@ -14,19 +14,17 @@ public interface FollowUpRepository extends JpaRepository<FollowUp, Long> {
 
     List<FollowUp> findByDoctorIdAndFollowUpDate(Long doctorId, LocalDate followUpDate);
 
-    // Missing methods required by FollowUpServiceImpl
     List<FollowUp> findByPatientIdOrderByFollowUpDateDesc(Long patientId);
 
-    List<FollowUp> findByPrescriptionId(Long prescriptionId);
+    // FIX: Explicit JPQL query to avoid "No property prescriptionId found" error
+    @Query("SELECT f FROM FollowUp f WHERE f.prescriptionId = :prescriptionId")
+    List<FollowUp> findByPrescriptionId(@Param("prescriptionId") Long prescriptionId);
 
-    // Case-Insensitive pending follow-ups check
     @Query("SELECT COUNT(f) FROM FollowUp f WHERE f.doctorId = :doctorId AND LOWER(f.status) = LOWER(:status)")
     long countByDoctorIdAndStatusIgnoreCase(@Param("doctorId") Long doctorId, @Param("status") String status);
 
-    // Doctor total Follow-ups
     long countByDoctorId(Long doctorId);
 
-    // Emergency Cases count
     @Query("SELECT COUNT(f) FROM FollowUp f WHERE f.doctorId = :doctorId AND (LOWER(f.reason) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(f.notes) LIKE LOWER(CONCAT('%', :keyword, '%')))")
     long countByDoctorIdAndReasonOrNotesContaining(@Param("doctorId") Long doctorId, @Param("keyword") String keyword);
 }

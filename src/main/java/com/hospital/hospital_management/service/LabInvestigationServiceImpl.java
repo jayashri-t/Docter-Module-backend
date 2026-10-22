@@ -3,7 +3,6 @@ package com.hospital.hospital_management.service;
 import com.hospital.hospital_management.dto.LabInvestigationDTO;
 import com.hospital.hospital_management.model.LabInvestigation;
 import com.hospital.hospital_management.repository.LabInvestigationRepository;
-import com.hospital.hospital_management.service.LabInvestigationService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/dashboard")
-@CrossOrigin(origins = "http://localhost:5173") // React/Vite Frontend वरून येणाऱ्या Request साठी CORS Allow केले आहे
+@CrossOrigin(origins = "http://localhost:5173") 
 public class DashboardController {
 
     private final DashboardService dashboardService;
@@ -16,7 +16,6 @@ public class DashboardController {
         this.dashboardService = dashboardService;
     }
 
-    // Endpoint: GET /api/dashboard/doctor/1
     @GetMapping("/doctor/{doctorId}")
     public ResponseEntity<DashboardStatsDTO> getDoctorDashboardStats(@PathVariable Long doctorId) {
         DashboardStatsDTO stats = dashboardService.getDoctorDashboardStats(doctorId);

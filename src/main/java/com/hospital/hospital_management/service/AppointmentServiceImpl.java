@@ -52,7 +52,10 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .orElseThrow(() -> new RuntimeException("Appointment not found with ID: " + id));
 
         Long previousPatientId = existing.getPatientId();
-        existing.setDoctorId(dto.getDoctorId());
+        
+        // Safeguard for doctorId
+        existing.setDoctorId(dto.getDoctorId() != null ? dto.getDoctorId() : (existing.getDoctorId() != null ? existing.getDoctorId() : 1L));
+        
         existing.setPatientId(dto.getPatientId());
         existing.setPatientName(dto.getPatientName());
         if (hasText(dto.getContact())) {
@@ -62,11 +65,15 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
         existing.setAge(dto.getAge());
         existing.setGender(dto.getGender());
-        existing.setAppointmentDate(dto.getAppointmentDate());
+        // Fallback to today's date if appointmentDate from DTO is null
+        existing.setAppointmentDate(dto.getAppointmentDate() != null ? dto.getAppointmentDate() : LocalDate.now());
         existing.setAppointmentTime(dto.getAppointmentTime());
         existing.setAppointmentDateTime(dto.getAppointmentDateTime());
         existing.setStatus(dto.getStatus());
         existing.setCareType(dto.getCareType());
+        existing.setReason(dto.getReason());
+        existing.setReferredBy(dto.getReferredBy());
+        existing.setTokenNumber(dto.getTokenNumber());
 
         Appointment updated = appointmentRepository.save(existing);
         return mapToDTO(updated);
@@ -118,8 +125,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     public DashboardStatsDTO getDoctorDashboardStats(Long doctorId) {
         DashboardStatsDTO stats = new DashboardStatsDTO();
         stats.setTodayAppointments(appointmentRepository.countByDoctorIdAndAppointmentDate(doctorId, LocalDate.now()));
-        stats.setCompletedAppointments(appointmentRepository.countByDoctorIdAndStatus(doctorId, "Completed"));
-        stats.setPendingAppointments(appointmentRepository.countByDoctorIdAndStatus(doctorId, "Pending"));
+        stats.setCompletedAppointments(appointmentRepository.countByDoctorIdAndStatus(doctorId, "COMPLETED"));
+        stats.setPendingAppointments(appointmentRepository.countByDoctorIdAndStatus(doctorId, "SCHEDULED"));
         stats.setPendingFollowUps(0);
         return stats;
     }
@@ -153,7 +160,6 @@ public class AppointmentServiceImpl implements AppointmentService {
         return getAppointmentsByPatientId(patientId);
     }
 
-    // Entity -> DTO Mapping
     private AppointmentDTO mapToDTO(Appointment entity) {
         AppointmentDTO dto = new AppointmentDTO();
         dto.setId(entity.getId());
@@ -181,6 +187,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         dto.setAppointmentDateTime(entity.getAppointmentDateTime());
         dto.setStatus(entity.getStatus());
         dto.setCareType(entity.getCareType());
+        dto.setReason(entity.getReason());
+        dto.setReferredBy(entity.getReferredBy());
+        dto.setTokenNumber(entity.getTokenNumber());
         return dto;
     }
 
@@ -194,21 +203,29 @@ public class AppointmentServiceImpl implements AppointmentService {
                 && !normalized.equalsIgnoreCase("null");
     }
 
-    // DTO -> Entity Mapping
     private Appointment mapToEntity(AppointmentDTO dto) {
         Appointment entity = new Appointment();
         entity.setId(dto.getId());
-        entity.setDoctorId(dto.getDoctorId());
+        
+        // Safeguard: if doctorId is null, default to 1L to satisfy database NOT NULL constraint
+        entity.setDoctorId(dto.getDoctorId() != null ? dto.getDoctorId() : 1L);
+        
         entity.setPatientId(dto.getPatientId());
         entity.setPatientName(dto.getPatientName());
         entity.setContact(dto.getContact());
         entity.setAge(dto.getAge());
         entity.setGender(dto.getGender());
-        entity.setAppointmentDate(dto.getAppointmentDate());
+        
+        // Safeguard: if appointmentDate is null, default to LocalDate.now() to satisfy database NOT NULL constraint
+        entity.setAppointmentDate(dto.getAppointmentDate() != null ? dto.getAppointmentDate() : LocalDate.now());
+        
         entity.setAppointmentTime(dto.getAppointmentTime());
         entity.setAppointmentDateTime(dto.getAppointmentDateTime());
         entity.setStatus(dto.getStatus());
         entity.setCareType(dto.getCareType());
+        entity.setReason(dto.getReason());
+        entity.setReferredBy(dto.getReferredBy());
+        entity.setTokenNumber(dto.getTokenNumber());
         return entity;
     }
 }

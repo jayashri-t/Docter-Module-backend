@@ -11,14 +11,22 @@ public class PatientHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "patient_id")
     private Long patientId;
+
+    @Column(name = "medical_condition")
     private String medicalCondition;
+
     private String diagnosis;
+
+    @Column(name = "diagnosis_date")
     private LocalDate diagnosisDate;
+
     private String allergies;
 
     public PatientHistory() {}
 
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

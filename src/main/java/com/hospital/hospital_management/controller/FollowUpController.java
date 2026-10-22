@@ -10,8 +10,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping({"/api/follow-ups", "/api/followups"}) // Supports both URL patterns
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping({"/api/follow-ups", "/api/followups"}) 
+@CrossOrigin(origins = "http://localhost:5173") // Vite/React default port
 public class FollowUpController {
 
     private final FollowUpService service;
@@ -28,7 +28,10 @@ public class FollowUpController {
     @GetMapping("/doctor/{doctorId}")
     public ResponseEntity<List<FollowUpDTO>> getFollowUpsByDoctorAndDate(
             @PathVariable Long doctorId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        if (date == null) {
+            date = LocalDate.now();
+        }
         return ResponseEntity.ok(service.getFollowUpsByDoctorAndDate(doctorId, date));
     }
 

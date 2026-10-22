@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping({"/api/doctors", "/api/doctor/profile"}) // Supports both endpoints
+@RequestMapping({"/api/doctors", "/api/doctor/profile"}) 
 @CrossOrigin(origins = "http://localhost:5173")
 public class DoctorProfileController {
 
@@ -21,7 +21,6 @@ public class DoctorProfileController {
         return ResponseEntity.ok(service.createOrUpdateProfile(dto));
     }
 
-    // ADDED: Fetch doctor profile by ID
     @GetMapping("/{id}")
     public ResponseEntity<DoctorProfileDTO> getById(@PathVariable Long id) {
         DoctorProfileDTO dto = service.getById(id);

@@ -32,7 +32,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
         Prescription entity = mapToEntity(dto);
 
-        // Ensure date is populated if missing in incoming DTO
         if (entity.getPrescriptionDate() == null) {
             entity.setPrescriptionDate(LocalDateTime.now());
         }

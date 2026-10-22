@@ -21,7 +21,6 @@ public class DoctorProfileServiceImpl implements DoctorProfileService {
         return mapToDTO(saved);
     }
 
-    // ADDED: Retrieve by ID
     @Override
     public DoctorProfileDTO getById(Long id) {
         return repository.findById(id)
@@ -50,6 +49,12 @@ public class DoctorProfileServiceImpl implements DoctorProfileService {
         dto.setEmail(entity.getEmail());
         dto.setFullName(entity.getFullName());
         dto.setSpecialization(entity.getSpecialization());
+        dto.setAvailable(entity.getAvailable());
+        dto.setConsultationFee(entity.getConsultationFee());
+        dto.setExperienceYears(entity.getExperienceYears());
+        dto.setQualification(entity.getQualification());
+        dto.setRoomNumber(entity.getRoomNumber());
+        dto.setUserId(entity.getUserId());
         return dto;
     }
 
@@ -62,6 +67,12 @@ public class DoctorProfileServiceImpl implements DoctorProfileService {
         entity.setEmail(dto.getEmail());
         entity.setFullName(dto.getFullName());
         entity.setSpecialization(dto.getSpecialization());
+        entity.setAvailable(dto.getAvailable());
+        entity.setConsultationFee(dto.getConsultationFee());
+        entity.setExperienceYears(dto.getExperienceYears());
+        entity.setQualification(dto.getQualification());
+        entity.setRoomNumber(dto.getRoomNumber());
+        entity.setUserId(dto.getUserId());
         return entity;
     }
 }

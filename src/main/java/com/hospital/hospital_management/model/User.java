@@ -10,11 +10,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "full_name")
     private String fullName;
+
     private String email;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
+
     private Integer age;
     private String gender;
+    private String username;
+    private String password;
+    private String role;
 
     public User() {}
 
@@ -36,4 +44,13 @@ public class User {
 
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 }

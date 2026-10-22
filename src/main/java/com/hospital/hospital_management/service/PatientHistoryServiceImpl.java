@@ -3,7 +3,6 @@ package com.hospital.hospital_management.service;
 import com.hospital.hospital_management.dto.PatientHistoryDTO;
 import com.hospital.hospital_management.model.PatientHistory;
 import com.hospital.hospital_management.repository.PatientHistoryRepository;
-import com.hospital.hospital_management.service.PatientHistoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

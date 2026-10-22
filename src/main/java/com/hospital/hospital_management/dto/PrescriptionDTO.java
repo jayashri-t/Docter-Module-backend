@@ -20,43 +20,19 @@ public class PrescriptionDTO {
         this.prescriptionDate = prescriptionDate;
     }
 
-    public Long getId() { 
-        return id; 
-    }
-    
-    public void setId(Long id) { 
-        this.id = id; 
-    }
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getDoctorId() { 
-        return doctorId; 
-    }
-    
-    public void setDoctorId(Long doctorId) { 
-        this.doctorId = doctorId; 
-    }
+    public Long getDoctorId() { return doctorId; }
+    public void setDoctorId(Long doctorId) { this.doctorId = doctorId; }
 
-    public Long getPatientId() { 
-        return patientId; 
-    }
-    
-    public void setPatientId(Long patientId) { 
-        this.patientId = patientId; 
-    }
+    public Long getPatientId() { return patientId; }
+    public void setPatientId(Long patientId) { this.patientId = patientId; }
 
-    public String getInstructions() { 
-        return instructions; 
-    }
-    
-    public void setInstructions(String instructions) { 
-        this.instructions = instructions; 
-    }
+    public String getInstructions() { return instructions; }
+    public void setInstructions(String instructions) { this.instructions = instructions; }
 
-    public LocalDateTime getPrescriptionDate() { 
-        return prescriptionDate; 
-    }
-    
-    public void setPrescriptionDate(LocalDateTime prescriptionDate) { 
-        this.prescriptionDate = prescriptionDate; 
-    }
+    public LocalDateTime getPrescriptionDate() { return prescriptionDate; }
+    public void setPrescriptionDate(LocalDateTime prescriptionDate) { this.prescriptionDate = prescriptionDate; }
 }
